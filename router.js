@@ -95,19 +95,6 @@ console.log(data);
                 }
                 else {
 */
-        mc.connect(url,function(err,db){
-                if(err)
-                {
-                    console.log(err);
-                }
-                else
-                {
-                    _db=db;
-                    console.log("DB connected");
-
-                }
-            }
-        );
 
                     var h = _db.collection('zeus_users');
                     h.insertOne(data, function (err) {
