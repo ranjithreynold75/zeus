@@ -78,14 +78,14 @@ module.exports=function(app,io){
     app.post("/signup",function(req,res){
 
 var data={
-    _id:req.body.id,
+    _id:req.body.phone,
     name:req.body.name,
     password:req.body.password,
     cars:[{}]
      };
         var h = _db.collection('zeus_users');
 
-        var cursor = h.find({_id: req.body.id});
+        var cursor = h.find({_id: req.body.phone});
 
         cursor.count(function (err, c) {
             if (err)
