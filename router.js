@@ -83,7 +83,7 @@ var data={
     password:req.body.password,
     cars:[{}]
      };
-
+console.log(data);
         var h = _db.collection("zeus_users");
 
         var cursor = h.find({_id: req.body.phone});
