@@ -37,7 +37,7 @@ mc.connect(url,function(err,db){
 
 module.exports=function(app,io){
 
-    io.on("connection",function(socket)
+    /*io.on("connection",function(socket)
     {
         console.log("A user connected:" + socket.id);
         socket.emit('message', {'id': socket.id});
@@ -69,7 +69,7 @@ module.exports=function(app,io){
         })
 
     });
-
+*/
 
     app.get("/",function(req,res){
         res.send("Welcome to zeus!!");
