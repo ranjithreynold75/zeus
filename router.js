@@ -84,7 +84,7 @@ var data={
     cars:[{}]
      };
 
-        var h = _db.Collection("zeus_users");
+        var h = _db.collection("zeus_users");
 
         var cursor = h.find({_id: req.body.phone});
 
@@ -98,7 +98,7 @@ var data={
                 }
                 else {
 
-                    var h = _db.Collection('zeus_users');
+                    var h = _db.collection('zeus_users');
                     h.insertOne(data, function (err) {
                         if (err) {
                             console.log(err);
