@@ -84,7 +84,7 @@ var data={
     cars:[{}]
      };
 console.log(data);
-        var h = _db.collection("zeus_users");
+     /*   var h = _db.collection("zeus_users");
 
         var cursor = h.find({_id: req.body.phone});
 
@@ -97,7 +97,7 @@ console.log(data);
                     res.send("user already exist");
                 }
                 else {
-
+*/
                     var h = _db.collection('zeus_users');
                     h.insertOne(data, function (err) {
                         if (err) {
@@ -112,8 +112,8 @@ console.log(data);
                         }
                     });
 
-                }
-            }
+               // }
+            //}
         })
     });
 
