@@ -76,7 +76,7 @@ module.exports=function(app,io){
     });
 
     app.post("/signup",function(req,res){
-
+console.log(req.body.name);
 var data={
     _id:req.body.phone,
     name:req.body.name,
