@@ -16,10 +16,7 @@ var users={
 
 };
 
-
-
 var _db;
-
 
 mc.connect(url,function(err,db){
         if(err)
@@ -37,7 +34,7 @@ mc.connect(url,function(err,db){
 
 module.exports=function(app,io){
 
-    /*io.on("connection",function(socket)
+    io.on("connection",function(socket)
     {
         console.log("A user connected:" + socket.id);
         socket.emit('message', {'id': socket.id});
@@ -69,7 +66,7 @@ module.exports=function(app,io){
         })
 
     });
-*/
+
 
     app.get("/",function(req,res){
         res.send("Welcome to zeus!!");
@@ -84,7 +81,7 @@ var data={
     cars:[{}]
      };
 console.log(data);
-     /*   var h = _db.collection("zeus_users");
+/*   var h = _db.collection("zeus_users");
 
         var cursor = h.find({_id: req.body.phone});
 
@@ -98,6 +95,20 @@ console.log(data);
                 }
                 else {
 */
+        mc.connect(url,function(err,db){
+                if(err)
+                {
+                    console.log(err);
+                }
+                else
+                {
+                    _db=db;
+                    console.log("DB connected");
+
+                }
+            }
+        );
+
                     var h = _db.collection('zeus_users');
                     h.insertOne(data, function (err) {
                         if (err) {
