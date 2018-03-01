@@ -119,8 +119,10 @@ module.exports=function(app,io){
 
 
     app.post("/login",function(req,res){
+
         var phone=req.body.phone;
         var password=req.body.password;
+        console.log(phone);
         if(phone!==''&&password!=='') {
             var h = _db.collection("zeus_users");
             var cursor = h.find({_id: phone, password: password});
