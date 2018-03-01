@@ -1,6 +1,8 @@
 var  m=require('mongodb');
 
 var url="mongodb://zeus:alwaysforward1.@ds012058.mlab.com:12058/zeus"; //keep it safe
+
+//var url="mongodb://jatters:alwaysforward1.@ds058579.mlab.com:58579/jatapp";
 //mongodb://<dbuser>:<dbpassword>@ds012058.mlab.com:12058/zeus
 var mc=m.MongoClient;
 
@@ -25,8 +27,8 @@ mc.connect(url,function(err,db){
         }
         else
         {
-            _db=db;
-            console.log("DB connected");
+            _db=db.db("zeus");
+            //console.log("DB connected");
 
         }
     }
@@ -81,7 +83,7 @@ module.exports=function(app,io){
             cars:[{}]
         };
         console.log(data);
-        /*   var h = _db.collection("zeus_users");
+           var h = _db.collection("zeus_users");
 
                 var cursor = h.find({_id: req.body.phone});
 
@@ -94,7 +96,7 @@ module.exports=function(app,io){
                             res.send("user already exist");
                         }
                         else {
-        */
+
 
         var h = _db.collection('zeus_users');
         h.insertOne(data, function (err) {
@@ -110,9 +112,9 @@ module.exports=function(app,io){
             }
         });
 
-        // }
-        //}
-        //})
+         }
+        }
+        })
     });
 
 
@@ -126,11 +128,11 @@ module.exports=function(app,io){
                 if (err)
                     console.log(err);
                 else {
-                    if (c == 1) {
+                    if (c ===1) {
                         console.log("login success "+phone);
                         res.send("success");
                     }
-                    else if(c==0)
+                    else if(c===0)
                     {
                         res.send("unsuccess");
                     }
@@ -149,6 +151,5 @@ module.exports=function(app,io){
     app.post("/add_new_car",function(req,res){
 
     })
-
 
 }
