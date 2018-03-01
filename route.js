@@ -122,7 +122,7 @@ module.exports=function(app,io){
         var phone=req.body.phone;
         var password=req.body.password;
         if(phone!==''&&password!=='') {
-            var h = _db.collection("smart_users");
+            var h = _db.collection("zeus_users");
             var cursor = h.find({_id: phone, password: password});
             cursor.count(function (err, c) {
                 if (err)
