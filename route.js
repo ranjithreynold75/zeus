@@ -11,12 +11,23 @@ var mc=m.MongoClient;
 var users={
     user:{
 
-    },
-    status:{
-
     }
 
 };
+
+var otps={
+  otp:{
+
+  }
+
+};
+
+var cars={
+    car:{
+
+    }
+};
+
 
 var _db;
 
@@ -49,24 +60,57 @@ module.exports=function(app,io){
         socket.on('register', function (data) {
             var d = JSON.parse(data);
             console.log("registering user " + d.id);
-            users.user[d.no] = d.id;
             var phoneno=d.no;
+            var cat=d.category;
+               if(cat==="phone") {
 
+                   var db = _db.collection('zeus_users');
+                   db.updateOne({_id: d.no}, {$set: {status: "online"}});
 
+                   console.log("user status:" + users);
+                   users.user[d.no] = d.id;
+                   // io.sockets.in("room-"+room).emit('notify',{'message':phoneno+" is online"});
+                   console.log(users);
+               }
+               else
+               {
+                   var db = _db.collection('cars');
+                   db.updateOne({_id: d.no}, {$set: {status: "online"}});
+                    cars.car[d.no]=d.id;
+                   console.log("user status:" + cars);
+                   // io.sockets.in("room-"+room).emit('notify',{'message':phoneno+" is online"});
+                   console.log(cars);
+               }
 
-            var db=_db.collection('zeus_users');
-            db.updateOne({_id:d.no},{$set:{status:"online"}});
+        });
 
-            console.log("user status:"+users);
+        socket.on("add_car",function(data){                     //from phone
+            var d=JSON.parse(data);
+            var c_no=d.c_no;
+           var p_no=d.p_no;
+            var x=Math.floor((Math.random()*999999)+100000);
+            otps.otp[p_no]=x;
+            io.to(users.user[c_no]).emit("otp",{pin:x});         //to iot device
+        });
 
+        socket.on("car_register",function(data){      //from phone
+            var d=JSON.parse(data);
+            var pin=d.pin;
+            var no=d.no;             //phone no
+            var car_no=d.car_no;
+            if(otps.otp[no]==pin)
+            {
+            var h=_db.collection("zeus_users");
+            h.updateOne({_id:no},{$push:{cars:car_no}});
+                io.to(users.user[no]).emit("otp_status",{message:"success"});
+                io.to(users.user[car_no]).emit("otp_status",{message:"success"});   //to iot device
 
-
-            // io.sockets.in("room-"+room).emit('notify',{'message':phoneno+" is online"});
-
-            console.log(users);
-
+            }
+            else
+            {
+                io.to(users.user[no]).emit("otp_status",{message:"unsuccess"});
+            }
         })
-
     });
 
 
@@ -80,7 +124,8 @@ module.exports=function(app,io){
             _id:req.body.phone,
             name:req.body.name,
             password:req.body.password,
-            cars:[{}]
+            cars:[{}],
+            status:"offline"
         };
         console.log(data);
            var h = _db.collection("zeus_users");
@@ -92,7 +137,7 @@ module.exports=function(app,io){
                         console.log(err);
 
                     else {
-                        if (c == 1) {
+                        if (c === 1) {
                             res.send("user already exist");
                         }
                         else {
@@ -152,6 +197,12 @@ module.exports=function(app,io){
     })
 
     app.post("/add_new_car",function(req,res){
+
+        var reg=req.body.reg;
+
+
+
+
 
     })
 
