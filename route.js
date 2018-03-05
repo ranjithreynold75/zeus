@@ -107,17 +107,36 @@ module.exports=function(app,io){
             h.updateOne({_id:no},{$push:{cars:car_no}});
                 io.to(users.user[no]).emit("otp_status",{message:"success"});
 
-                io.to(users.user[car_no]).emit("otp_status",{message:"success"});   //to iot device
+                //io.to(users.user[car_no]).emit("otp_status",{message:"success"});   //to iot device
 
             }
             else
             {
                 io.to(users.user[no]).emit("otp_status",{message:"unsuccess"});
             }
-        })
+        });
+
+        socket.on("car_connect",function(data){               //connecting to the car
+            var d=JSON.parse(data);
+            var h=_db.collection("zeus_users");
+          var cursor=h.find({_id:d.phone,cars:d.car})
+          cursor.count(function(err,c){
+              if(c==1)
+              {
+                  h=_db.collection("zeus_users");
+                  h.find({_id:d.phone},{name:1}).forEach(function(x){
+                      var name=JSON.stringify(x);
+                      io.to(cars.car[d.car]).emit("user_connect",{phone:d.phone,name:name.name});
+                  });
+
+              }
+          })
+        });
+
     });
 
 
+//REST API
     app.get("/",function(req,res){
         res.send("Welcome to zeus!!");
     });
@@ -160,8 +179,7 @@ module.exports=function(app,io){
                 res.send("success");
             }
         });
-
-         }
+                        }
         }
         })
     });
@@ -200,14 +218,38 @@ module.exports=function(app,io){
 
     })
 
-    app.post("/add_new_car",function(req,res){
-
-        var reg=req.body.reg;
 
 
+    app.post("/car_details",function(req,res){      //Start up request for car details
+        var user=req.body.phone;
+        var h=_db.collection("zeus_users");
+        h.find({_id:user},{cars:1}).forEach(function (x) {
+        console.log(JSON.stringify(x));
+            res.send(JSON.stringify(x));
+        });
+    });
 
 
+    app.post("/car_data",function(req,res){      //Start up request for car details
+        var user=req.body.phone;
+        var h=_db.collection("zeus_users");
+        h.find({_id:user},{cars:1}).forEach(function (x) {
+            console.log(JSON.stringify(x));
+            res.send(JSON.stringify(x));
+        });
+    });
 
-    })
+app.post("/fuel_data",function(req,res){
+    var user="F_"+req.body.car;
+    var h=_db.collection("fuel");
+    h.find({_id:user}).forEach(function(x){
+
+        var data=JSON.stringify(x);
+        console.log(data);
+        res.send(data);
+    });
+});
+
+
 
 }
