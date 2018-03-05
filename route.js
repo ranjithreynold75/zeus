@@ -99,8 +99,10 @@ module.exports=function(app,io){
             var pin=d.pin;
             var no=d.no;             //phone no
             var car_no=d.car_no;
+            console.log(d);
             if(otps.otp[no]==pin)
             {
+                console.log("otp success");
             var h=_db.collection("zeus_users");
             h.updateOne({_id:no},{$push:{cars:car_no}});
                 io.to(users.user[no]).emit("otp_status",{message:"success"});
