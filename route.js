@@ -91,7 +91,7 @@ module.exports=function(app,io){
             var x=Math.floor((Math.random()*999999)+100000);
             otps.otp[p_no]=x;
             console.log(otps);
-            io.to(users.user[c_no]).emit("otp",{pin:x});         //to iot device
+            io.to(cars.car[c_no]).emit("otp",{pin:x});         //to iot device
         });
 
         socket.on("car_register",function(data){      //from phone
