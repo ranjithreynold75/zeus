@@ -116,10 +116,10 @@ module.exports=function(app,io){
             }
         });
 
-        socket.on("car_connect",function(data){               //connecting to the car
+        socket.on("car_connect",function(data){               //connecting to the car i mean sync
             var d=JSON.parse(data);
             var h=_db.collection("zeus_users");
-          var cursor=h.find({_id:d.phone,cars:d.car})
+          var cursor=h.find({_id:d.phone,cars:d.car});
           cursor.count(function(err,c){
               if(c==1)
               {
@@ -220,8 +220,8 @@ module.exports=function(app,io){
 
 
 
-    app.post("/car_details",function(req,res){      //Start up request for car details
-        var user=req.body.phone;
+    app.post("/car_details",function(req,res){      //Start up request for car registered to user
+        var user=req.body.phone;    //phone no
         var h=_db.collection("zeus_users");
         h.find({_id:user},{cars:1}).forEach(function (x) {
         console.log(JSON.stringify(x));
@@ -230,10 +230,10 @@ module.exports=function(app,io){
     });
 
 
-    app.post("/car_data",function(req,res){      //Start up request for car details
-        var user=req.body.phone;
-        var h=_db.collection("zeus_users");
-        h.find({_id:user},{cars:1}).forEach(function (x) {
+    app.post("/car_data",function(req,res){      //particular car details
+        var user=req.body.car;       //car id
+        var h=_db.collection("cars");
+        h.find({_id:user}).forEach(function (x) {
             console.log(JSON.stringify(x));
             res.send(JSON.stringify(x));
         });
@@ -243,7 +243,6 @@ app.post("/fuel_data",function(req,res){
     var user="F_"+req.body.car;
     var h=_db.collection("fuel");
     h.find({_id:user}).forEach(function(x){
-
         var data=JSON.stringify(x);
         console.log(data);
         res.send(data);
@@ -252,4 +251,4 @@ app.post("/fuel_data",function(req,res){
 
 
 
-}
+};
