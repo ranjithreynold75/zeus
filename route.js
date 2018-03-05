@@ -90,6 +90,7 @@ module.exports=function(app,io){
            var p_no=d.p_no;
             var x=Math.floor((Math.random()*999999)+100000);
             otps.otp[p_no]=x;
+            console.log(otps);
             io.to(users.user[c_no]).emit("otp",{pin:x});         //to iot device
         });
 
@@ -103,6 +104,7 @@ module.exports=function(app,io){
             var h=_db.collection("zeus_users");
             h.updateOne({_id:no},{$push:{cars:car_no}});
                 io.to(users.user[no]).emit("otp_status",{message:"success"});
+
                 io.to(users.user[car_no]).emit("otp_status",{message:"success"});   //to iot device
 
             }
