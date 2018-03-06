@@ -274,6 +274,15 @@ app.post("/upload_trip",function(req,res){
  res.send("success");
 });
 
+    app.post("/trip_plan",function(req,res){
+        var car=req.body.id;
+         var h=_db.collection("trip");
+        h.find({_id:car}).forEach(function(x){
+            console.log(JSON.stringify(x));
+            res.send(JSON.stringify(x));
+        })
+
+    });
 
 
 };
