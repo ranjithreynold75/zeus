@@ -133,6 +133,18 @@ module.exports=function(app,io){
           })
         });
 
+        socket.on("send_message",function(data){              //sending message to device
+            var d=JSON.parse(data);
+            var id=d.id;         //car no
+            var no=d.no;        //phone no
+            var message=d.message;
+
+            io.to(cars.car[d.car]).emit("message",{no:no,message:message});
+
+        })
+
+
+
     });
 
 
@@ -247,6 +259,19 @@ app.post("/fuel_data",function(req,res){
         console.log(data);
         res.send(data);
     });
+});
+
+
+app("/upload_trip",function(req,res){
+   var car=req.body.id;
+   var user=req.body.no;
+   var date=req.body.date;
+   var time=req.body.tim;
+   var desc=req.body.desc;
+   var h=_db.collection("trip");
+   var data={date:date,time:time,description:desc};
+   h.updateOne({_id:car},{$push:{plan:data}});
+ res.send("success");
 });
 
 
