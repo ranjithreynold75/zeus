@@ -138,8 +138,8 @@ module.exports=function(app,io){
             var id=d.id;         //car no
             var no=d.no;        //phone no
             var message=d.message;
-
-            io.to(cars.car[d.car]).emit("message",{no:no,message:message});
+console.log(message);
+            io.to(cars.car[d.car]).emit("r_message",{no:no,message:message});
 
         })
 
