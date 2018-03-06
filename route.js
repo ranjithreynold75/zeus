@@ -262,14 +262,14 @@ app.post("/fuel_data",function(req,res){
 });
 
 
-app("/upload_trip",function(req,res){
+app.post("/upload_trip",function(req,res){
    var car=req.body.id;
    var user=req.body.no;
    var date=req.body.date;
    var time=req.body.tim;
    var desc=req.body.desc;
    var h=_db.collection("trip");
-   var data={date:date,time:time,description:desc};
+   var data={date:date,user:user,time:time,description:desc};
    h.updateOne({_id:car},{$push:{plan:data}});
  res.send("success");
 });
