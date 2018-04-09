@@ -39,7 +39,7 @@ mc.connect(url,function(err,db){
         else
         {
             _db=db.db("zeus");
-            //console.log("DB connected");
+            console.log("DB connected");
 
         }
     }
@@ -58,7 +58,7 @@ module.exports=function(app,io){
 
 
         socket.on('register', function (data) {
-            var d = JSON.parse(data);
+            var d = data;
             console.log("registering user " + d.id);
             var phoneno=d.no;
             var cat=d.category;
