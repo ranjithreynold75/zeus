@@ -246,8 +246,8 @@ console.log(message);
         var user=req.body.car;       //car id
         var h=_db.collection("cars");
         h.find({_id:user}).forEach(function (x) {
-            console.log(JSON.stringify(x));
-            res.send(JSON.stringify(x));
+            console.log(x));
+            res.send(x);
         });
     });
 
@@ -255,9 +255,9 @@ app.post("/fuel_data",function(req,res){
     var user="F_"+req.body.car;
     var h=_db.collection("fuel");
     h.find({_id:user}).forEach(function(x){
-        var data=JSON.stringify(x);
-        console.log(data);
-        res.send(data);
+        //var data=JSON.stringify(x);
+        console.log(x);
+        res.send(x);
     });
 });
 
@@ -278,8 +278,8 @@ app.post("/upload_trip",function(req,res){
         var car=req.body.id;
          var h=_db.collection("trip");
         h.find({_id:car}).forEach(function(x){
-            console.log(JSON.stringify(x));
-            res.send(JSON.stringify(x));
+            console.log(x);
+            res.send(x);
         })
 
     });
