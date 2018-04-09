@@ -246,7 +246,7 @@ console.log(message);
         var user=req.body.car;       //car id
         var h=_db.collection("cars");
         h.find({_id:user}).forEach(function (x) {
-            console.log(x));
+            console.log(x);
             res.send(x);
         });
     });
