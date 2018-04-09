@@ -125,7 +125,7 @@ module.exports=function(app,io){
               {
                   h=_db.collection("zeus_users");
                   h.find({_id:d.phone},{name:1}).forEach(function(x){
-                      var name=JSON.stringify(x);
+                      var name=x;
                       io.to(cars.car[d.car]).emit("user_connect",{phone:d.phone,name:name.name});
                   });
 
@@ -236,8 +236,8 @@ console.log(message);
         var user=req.body.phone;    //phone no
         var h=_db.collection("zeus_users");
         h.find({_id:user},{cars:1}).forEach(function (x) {
-        console.log(JSON.stringify(x));
-            res.send(JSON.stringify(x));
+        console.log(x);
+            res.send(x);
         });
     });
 
