@@ -118,11 +118,11 @@ module.exports=function(app,io){
         });
 
         socket.on("car_connect",function(data){               //connecting to the car i mean sync
-            var d=JSON.parse(data);
+            var d=data;
             var h=_db.collection("zeus_users");
           var cursor=h.find({_id:d.phone,cars:d.car});
           cursor.count(function(err,c){
-              if(c==1)
+              if(c===1)
               {
                   h=_db.collection("zeus_users");
                   h.find({_id:d.phone},{name:1}).forEach(function(x){
