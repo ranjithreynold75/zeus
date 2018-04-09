@@ -62,6 +62,7 @@ module.exports=function(app,io){
             console.log("registering user " + d.id);
             var phoneno=d.no;
             var cat=d.category;
+            console.log(cat);
                if(cat==="phone") {
 
                    var db = _db.collection('zeus_users');
