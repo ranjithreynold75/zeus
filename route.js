@@ -58,7 +58,7 @@ module.exports=function(app,io){
 
 
         socket.on('register', function (data) {
-            var d = data;
+            var d = JSON.parse(data);
             console.log("registering user " + d.id);
             var phoneno=d.no;
             var cat=d.category;
