@@ -86,7 +86,7 @@ module.exports=function(app,io){
         });
 
         socket.on("add_car",function(data){                     //from phone
-            var d=data;
+            var d=JSON.parse(data);
             var c_no=d.c_no;
            var p_no=d.p_no;
             var x=Math.floor((Math.random()*999999)+100000);
@@ -96,7 +96,7 @@ module.exports=function(app,io){
         });
 
         socket.on("car_register",function(data){      //from phone
-            var d=data;
+            var d=JSON.parse(data);
             var pin=d.pin;
             var no=d.no;             //phone no
             var car_no=d.car_no;
@@ -118,7 +118,7 @@ module.exports=function(app,io){
         });
 
         socket.on("car_connect",function(data){               //connecting to the car i mean sync
-            var d=data;
+            var d=JSON.parse(data);
             var h=_db.collection("zeus_users");
           var cursor=h.find({_id:d.phone,cars:d.car});
           cursor.count(function(err,c){
@@ -135,7 +135,7 @@ module.exports=function(app,io){
         });
 
         socket.on("send_message",function(data){              //sending message to device
-            var d=data;
+            var d=JSON.parse(data);
             var id=d.id;         //car no
             var no=d.no;        //phone no
             var message=d.message;
